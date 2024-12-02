@@ -22,24 +22,26 @@ def is_safe(data: list):
         
     return True
 
+
 #Input
-with open("Day2.in") as file:
+with open("Day2\Day2.in") as file:
     lines = file.readlines()
     
     data = []
+    
     for line in lines:
-        line = line.split()
-        line = list(map(int, line))
-        data.append(line)
+        data.append(list(map(int, line.split())))
+
 
 #Result
 res = 0            
 for line in data:
     if is_safe(line):
        res += 1
+    
     else:
-        for opt in [line[:d] + line[d + 1:] for d in range(len(line))]:
-            if is_safe(opt):
+        for option in [line[:opt] + line[opt + 1:] for opt in range(len(line))]:
+            if is_safe(option):
                 res += 1
                 break
 

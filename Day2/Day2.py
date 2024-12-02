@@ -22,15 +22,16 @@ def is_safe(data: list):
         
     return True
 
+
 #Input
-with open("Day2.in") as file:
+with open("Day2\Day2.in") as file:
     lines = file.readlines()
     
     data = []
+    
     for line in lines:
-        line = line.split()
-        line = list(map(int, line))
-        data.append(line)
+        data.append(list(map(int, line.split())))
+
 
 #Result
 res = 0            
