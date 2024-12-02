@@ -1,65 +1,46 @@
 def is_safe(data: list):
-    data = list(map(int, data))
-    
     mono = 0
-
-    if data[1] - data[0] < 0:
-        mono = -1
-    elif data[1] - data[0] > 0: 
-        mono = 1
-    else:
+    
+    if data[1] == data[0]:
         return False
+
+    if data[1] < data[0]:
+        mono = -1
+        
+    elif data[1] > data[0]: 
+        mono = 1
     
     for i in range(len(data) - 1):
         
         r = (data[i + 1] * mono) - (data[i] * mono)
         
         if r == 0:
-            if not is_safe(data.pop(i)):
-                return False
+            return False
         
-        else:
-            if r < 1 or r >3:
-                if not is_safe(data.pop(i)) or not is_safe(data.pop(i + 1)):
-                    return False 
-        
+        if r < 1 or r >3:
+            return False 
         
     return True
-
-def get_options(data: list):
-    mono = 0
-    
-    opt = []
-
-    for d in data:
-        opt.append(data.pop(d))
-
-    '''if data[1] - data[0] < 0:
-        mono = -1
-    elif data[1] - data[0] > 0: 
-        mono = 1
-    else:
-        opt.append(data.pop(0))'''
-        
-    return opt
-
-
 
 #Input
 with open("Day2.in") as file:
     lines = file.readlines()
     
-for l in range(len(lines)):
-    lines[l] = lines[l].split()
+    data = []
+    for line in lines:
+        line = line.split()
+        line = list(map(int, line))
+        data.append(line)
 
-
+#Result
 res = 0            
-for line in lines:
+for line in data:
     if is_safe(line):
        res += 1
     else:
-        
-        
-        pass
-       
+        for opt in [line[:d] + line[d + 1:] for d in range(len(line))]:
+            if is_safe(opt):
+                res += 1
+                break
+
 print(res)
