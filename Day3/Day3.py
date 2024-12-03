@@ -2,23 +2,15 @@ import re
 
 def find_muls(line: str) -> list:
     
-    muls = re.findall(r"mul\([0-9]+,[0-9]+\)",line)    
+    muls = re.findall(r"mul\((\d+),(\d+)\)",line)
     
-    for i in range(len(muls)):
-        muls[i] = muls[i][4:-1].split(",")
-        muls[i] = list(map(int, muls[i]))
-    
-    return muls
+    return list(map(lambda x: list(map(int, x)), muls))
 
 #Input
 with open("Day3/Day3.in") as file:
     memory = file.read()
 
 #Result
-res = 0
-for m in find_muls(memory):
-    res += m[0] * m[1]
+res = sum(map(lambda x: x[0] * x[1], find_muls(memory)))
 
 print(res)
-        
-    
